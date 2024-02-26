@@ -200,7 +200,7 @@ ImGui.SameLine()
                 STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                 GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
                 TASK.CLEAR_PED_TASKS(ped)
-                TASK.TASK_PLAY_ANIM(ped, "missminuteman_1ig_2", "handsup_base", 8.0, -8.0, -1, 0, 1.0, false, false, false)
+                TASK.TASK_PLAY_ANIM(ped, "missminuteman_1ig_2", "handsup_base", 4.0, -4.0, 100, 0, 1.0, false, false, false)
                 is_playing_anim = false
             end)
         end
@@ -214,7 +214,7 @@ ImGui.SameLine()
                 STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                 GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
                 TASK.CLEAR_PED_TASKS(ped)
-                TASK.TASK_PLAY_ANIM(ped, "missminuteman_1ig_2", "handsup_base", 8.0, -8.0, -1, 0, 1.0, false, false, false)
+                TASK.TASK_PLAY_ANIM(ped, "missminuteman_1ig_2", "handsup_base", 4.0, -4.0, 100, 0, 1.0, false, false, false)
                 is_playing_anim = false
             end
         end
@@ -227,6 +227,7 @@ ImGui.SameLine()
             STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
             GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
             TASK.CLEAR_PED_TASKS(ped)
+	    TASK.TASK_PLAY_ANIM(ped, "missminuteman_1ig_2", "handsup_base", 4.0, -4.0, 100, 0, 1.0, false, false, false)
             is_playing_anim = false
         end
     end)
@@ -238,6 +239,7 @@ ImGui.SameLine()
             STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
             GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
             TASK.CLEAR_PED_TASKS(ped)
+	    TASK.TASK_PLAY_ANIM(ped, "missminuteman_1ig_2", "handsup_base", 4.0, -4.0, 100, 0, 1.0, false, false, false)
             is_playing_anim = false
         end
     end)

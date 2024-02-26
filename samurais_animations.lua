@@ -81,10 +81,9 @@ local forwardY = ENTITY.GET_ENTITY_FORWARD_Y(ped)
                         STREAMING.REQUEST_MODEL(info.prop1)
                         coroutine.yield()
                     end
-                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
                     prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0,0.0,0, true, true, false)
                     ENTITY.ATTACH_ENTITY_TO_ENTITY(prop1, ped, boneIndex, info.posx, info.posy, info.posz, info.rotx, info.roty, info.rotz, false, false, false, false, 2, true, 1)
-                    ENTITY.FREEZE_ENTITY_POSITION(prop1, true)
+                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
                     is_playing_anim = true
 
@@ -116,10 +115,10 @@ local forwardY = ENTITY.GET_ENTITY_FORWARD_Y(ped)
                         STREAMING.REQUEST_MODEL(info.prop1)
                         coroutine.yield()
                     end
-                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
                     prop1 = OBJECT.CREATE_OBJECT(info.prop1, coords.x + (forwardX), coords.y + (forwardY), coords.z, true, true, false)
                     ENTITY.SET_ENTITY_HEADING(prop1, heading)
                     OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop1)
+                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
                     is_playing_anim = true
 
@@ -136,12 +135,12 @@ local forwardY = ENTITY.GET_ENTITY_FORWARD_Y(ped)
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
                     script:sleep(400)
-                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
                     prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0,0.0,0, true, true, false)
                     local bonecoords = PED.GET_PED_BONE_COORDS(ped, info.boneID)
                     ENTITY.SET_ENTITY_COORDS(prop1, bonecoords.x + info.posx, bonecoords.y + info.posy, bonecoords.z + info.posz)
                     ENTITY.SET_ENTITY_COLLISION(prop1, info.propColl, info.propColl)
                     OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop1)
+                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
                     is_playing_anim = true
 
                 elseif info.type == 5 then
@@ -155,24 +154,26 @@ local forwardY = ENTITY.GET_ENTITY_FORWARD_Y(ped)
                         STREAMING.REQUEST_MODEL(info.prop1)
                         coroutine.yield()
                     end
+                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0,0.0,0, true, true, false)
+                    ENTITY.ATTACH_ENTITY_TO_ENTITY(prop1, ped, boneIndex, info.posx, info.posy, info.posz, info.rotx, info.roty, info.rotz, false, false, false, false, 2, true, 1)
+                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
+                    script:sleep(50)
                     while not STREAMING.HAS_MODEL_LOADED(info.prop2) do
                         STREAMING.REQUEST_MODEL(info.prop2)
                         coroutine.yield()
                     end
-                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
-                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop2)
-                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0,0.0,0, true, true, false)
-                    ENTITY.ATTACH_ENTITY_TO_ENTITY(prop1, ped, boneIndex, info.posx, info.posy, info.posz, info.rotx, info.roty, info.rotz, false, false, false, false, 2, true, 1)
                     prop2 = OBJECT.CREATE_OBJECT(info.prop2, coords.x + (forwardX), coords.y + (forwardY), coords.z, true, true, false)
                     ENTITY.SET_ENTITY_HEADING(prop2, heading)
                     OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop2)
-                    TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
+                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop2)
+                    script:sleep(50)
                     while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(info.ptfxdict) do
                         STREAMING.REQUEST_NAMED_PTFX_ASSET(info.ptfxdict)
                         coroutine.yield()
                     end
                     GRAPHICS.USE_PARTICLE_FX_ASSET(info.ptfxdict)
                     loopedFX = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(info.ptfxname, prop2, info.ptfxOffx, info.ptfxOffy, info.ptfxOffz, 0.0, 0.0, 0.0, info.ptfxscale, false, false, false, 0, 0, 0, 0)
+                    TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
                     is_playing_anim = true
 
                 else

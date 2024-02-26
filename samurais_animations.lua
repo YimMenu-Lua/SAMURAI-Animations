@@ -39,13 +39,13 @@ end
 
 local function displayFilteredList()
     updatefilteredAnims()
+
     local animNames = {}
     for _, anim in ipairs(filteredAnims) do
         table.insert(animNames, anim.name)
     end
     anim_index, used = ImGui.ListBox(" ", anim_index, animNames, #filteredAnims)
 end
-
 anim_player:add_imgui(displayFilteredList)
 
 anim_player:add_separator()
@@ -71,23 +71,26 @@ local forwardY = ENTITY.GET_ENTITY_FORWARD_Y(ped)
                 coroutine.yield()
 
                 if info.type == 1 then
-                    ENTITY.DELETE_ENTITY(prop)
+                    ENTITY.DELETE_ENTITY(prop1)
+                    ENTITY.DELETE_ENTITY(prop2)
                     TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
                     STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                     GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
                     script:sleep(50)
-                    while not STREAMING.HAS_MODEL_LOADED(info.propHash) do
-                        STREAMING.REQUEST_MODEL(info.propHash)
+                    while not STREAMING.HAS_MODEL_LOADED(info.prop1) do
+                        STREAMING.REQUEST_MODEL(info.prop1)
                         coroutine.yield()
                     end
-                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.propHash)
-                    prop = OBJECT.CREATE_OBJECT(info.propHash, 0.0,0.0,0, true, true, false)
-                    ENTITY.ATTACH_ENTITY_TO_ENTITY(prop, ped, boneIndex, info.posx, info.posy, info.posz, info.rotx, info.roty, info.rotz, false, false, false, false, 2, true, 1)
+                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
+                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0,0.0,0, true, true, false)
+                    ENTITY.ATTACH_ENTITY_TO_ENTITY(prop1, ped, boneIndex, info.posx, info.posy, info.posz, info.rotx, info.roty, info.rotz, false, false, false, false, 2, true, 1)
+                    ENTITY.FREEZE_ENTITY_POSITION(prop1, true)
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
                     is_playing_anim = true
 
                 elseif info.type == 2 then
-                    ENTITY.DELETE_ENTITY(prop)
+                    ENTITY.DELETE_ENTITY(prop1)
+                    ENTITY.DELETE_ENTITY(prop2)
                     TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
                     STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                     GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
@@ -103,45 +106,78 @@ local forwardY = ENTITY.GET_ENTITY_FORWARD_Y(ped)
                     is_playing_anim = true
 
                 elseif info.type == 3 then
-                    ENTITY.DELETE_ENTITY(prop)
+                    ENTITY.DELETE_ENTITY(prop1)
+                    ENTITY.DELETE_ENTITY(prop2)
                     TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
                     STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                     GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
                     script:sleep(50)
-                    while not STREAMING.HAS_MODEL_LOADED(info.propHash) do
-                        STREAMING.REQUEST_MODEL(info.propHash)
+                    while not STREAMING.HAS_MODEL_LOADED(info.prop1) do
+                        STREAMING.REQUEST_MODEL(info.prop1)
                         coroutine.yield()
                     end
-                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.propHash)
-                    prop = OBJECT.CREATE_OBJECT(info.propHash, coords.x + (forwardX), coords.y + (forwardY), coords.z, true, true, false)
-                    ENTITY.SET_ENTITY_HEADING(prop, heading -180)
-                    OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop)
-		    ENTITY.FREEZE_ENTITY_POSITION(prop, true)
+                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
+                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, coords.x + (forwardX), coords.y + (forwardY), coords.z, true, true, false)
+                    ENTITY.SET_ENTITY_HEADING(prop1, heading)
+                    OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop1)
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
                     is_playing_anim = true
 
                 elseif info.type == 4 then
-                    ENTITY.DELETE_ENTITY(prop)
+                    ENTITY.DELETE_ENTITY(prop1)
+                    ENTITY.DELETE_ENTITY(prop2)
                     TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
                     STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                     GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
                     script:sleep(50)
-                    while not STREAMING.HAS_MODEL_LOADED(info.propHash) do
-                        STREAMING.REQUEST_MODEL(info.propHash)
+                    while not STREAMING.HAS_MODEL_LOADED(info.prop1) do
+                        STREAMING.REQUEST_MODEL(info.prop1)
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
                     script:sleep(400)
-                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.propHash)
-                    prop = OBJECT.CREATE_OBJECT(info.propHash, 0.0,0.0,0, true, true, false)
+                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
+                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0,0.0,0, true, true, false)
                     local bonecoords = PED.GET_PED_BONE_COORDS(ped, info.boneID)
-                    ENTITY.SET_ENTITY_COORDS(prop, bonecoords.x + info.posx, bonecoords.y + info.posy, bonecoords.z + info.posz)
-                    ENTITY.SET_ENTITY_COLLISION(prop, info.propColl, info.propColl)
-                    OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop)
+                    ENTITY.SET_ENTITY_COORDS(prop1, bonecoords.x + info.posx, bonecoords.y + info.posy, bonecoords.z + info.posz)
+                    ENTITY.SET_ENTITY_COLLISION(prop1, info.propColl, info.propColl)
+                    OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop1)
+                    is_playing_anim = true
+
+                elseif info.type == 5 then
+                    ENTITY.DELETE_ENTITY(prop1)
+                    ENTITY.DELETE_ENTITY(prop2)
+                    TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
+                    STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
+                    GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
+                    script:sleep(50)
+                    while not STREAMING.HAS_MODEL_LOADED(info.prop1) do
+                        STREAMING.REQUEST_MODEL(info.prop1)
+                        coroutine.yield()
+                    end
+                    while not STREAMING.HAS_MODEL_LOADED(info.prop2) do
+                        STREAMING.REQUEST_MODEL(info.prop2)
+                        coroutine.yield()
+                    end
+                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
+                    STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop2)
+                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0,0.0,0, true, true, false)
+                    ENTITY.ATTACH_ENTITY_TO_ENTITY(prop1, ped, boneIndex, info.posx, info.posy, info.posz, info.rotx, info.roty, info.rotz, false, false, false, false, 2, true, 1)
+                    prop2 = OBJECT.CREATE_OBJECT(info.prop2, coords.x + (forwardX), coords.y + (forwardY), coords.z, true, true, false)
+                    ENTITY.SET_ENTITY_HEADING(prop2, heading)
+                    OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop2)
+                    TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
+                    while not STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(info.ptfxdict) do
+                        STREAMING.REQUEST_NAMED_PTFX_ASSET(info.ptfxdict)
+                        coroutine.yield()
+                    end
+                    GRAPHICS.USE_PARTICLE_FX_ASSET(info.ptfxdict)
+                    loopedFX = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(info.ptfxname, prop2, info.ptfxOffx, info.ptfxOffy, info.ptfxOffz, 0.0, 0.0, 0.0, info.ptfxscale, false, false, false, 0, 0, 0, 0)
                     is_playing_anim = true
 
                 else
-                    ENTITY.DELETE_ENTITY(prop)
+                    ENTITY.DELETE_ENTITY(prop1)
+                    ENTITY.DELETE_ENTITY(prop2)
                     TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
                     STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                     GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
@@ -158,7 +194,8 @@ ImGui.SameLine()
     if ImGui.Button("Stop") then
         if info ~= nil and is_playing_anim then
             script.run_in_fiber(function()
-                ENTITY.DELETE_ENTITY(prop)
+                ENTITY.DELETE_ENTITY(prop1)
+                ENTITY.DELETE_ENTITY(prop2)
                 STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                 GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
                 TASK.CLEAR_PED_TASKS(ped)
@@ -171,7 +208,8 @@ ImGui.SameLine()
     script.register_looped("Stop Animation", function()
         if info ~= nil and is_playing_anim then
             if PAD.IS_CONTROL_PRESSED(0, 252) then
-                ENTITY.DELETE_ENTITY(prop)
+                ENTITY.DELETE_ENTITY(prop1)
+                ENTITY.DELETE_ENTITY(prop2)
                 STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                 GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
                 TASK.CLEAR_PED_TASKS(ped)
@@ -183,7 +221,8 @@ ImGui.SameLine()
 
     event.register_handler(menu_event.ScriptsReloaded, function()
         if info ~= nil and is_playing_anim then
-            ENTITY.DELETE_ENTITY(prop)
+            ENTITY.DELETE_ENTITY(prop1)
+            ENTITY.DELETE_ENTITY(prop2)
             STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
             GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
             TASK.CLEAR_PED_TASKS(ped)
@@ -193,7 +232,8 @@ ImGui.SameLine()
 
     event.register_handler(menu_event.MenuUnloaded, function()
         if info ~= nil and is_playing_anim then
-            ENTITY.DELETE_ENTITY(prop)
+            ENTITY.DELETE_ENTITY(prop1)
+            ENTITY.DELETE_ENTITY(prop2)
             STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
             GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)
             TASK.CLEAR_PED_TASKS(ped)

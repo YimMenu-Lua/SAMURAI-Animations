@@ -56,7 +56,7 @@ anim_player:add_separator()
 
 anim_player:add_imgui(function()
 
-local info = filteredAnims[anim_index+1] or nil
+local info = filteredAnims[anim_index+1]
 local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
 local coords = ENTITY.GET_ENTITY_COORDS(ped, false)
 local heading = ENTITY.GET_ENTITY_HEADING(ped)

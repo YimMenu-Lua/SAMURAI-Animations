@@ -2,6 +2,8 @@
 
 ![samurais_animations](https://github.com/xesdoog/SAMURAI-s-Animations/assets/66764345/be26aff9-5ad8-4918-92d4-a9bee03bf3df)
 
+## WARNING! This script currently causes FPS drops after using too many animations. I have no idea how to fix it at the moment but I'm working on it.
+
 ## NOTE :
 
 - Due to life being a pain in my _a$$_, I will not have the time to improve this script so if anybody is willing to contribute animations or new features, feel free to to do so. There will be a short comment at the top of the **animdata.lua** file explaining my messy n00b approach. Pull requests are welcome.

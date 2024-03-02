@@ -43,6 +43,9 @@ local function updatefilteredAnims()
             table.insert(filteredAnims, anim)
         end
     end
+    table.sort(animlist, function(a, b)
+        return a.name < b.name
+    end)
 end
 
 local function displayFilteredList()

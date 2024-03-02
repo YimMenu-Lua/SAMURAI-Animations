@@ -143,7 +143,7 @@ end
                         STREAMING.REQUEST_MODEL(info.prop1)
                         coroutine.yield()
                     end
-                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, coords.x + (forwardX), coords.y + (forwardY), coords.z, true, true, false)
+                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, coords.x + forwardX /1.7, coords.y + forwardY /1.7, coords.z, true, true, false)
                     ENTITY.SET_ENTITY_HEADING(prop1, heading)
                     OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop1)
                     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
@@ -207,7 +207,20 @@ end
             ImGui.Text("Use 'W A S D' to adjust your position.")
             ImGui.EndTooltip()
         end
+    elseif info.name == "Crawl Forward Injured" then
+        if ImGui.IsItemHovered() then
+            ImGui.BeginTooltip()
+            ImGui.Text("Use 'A/D' To Turn Right/Left.\nEquip Your Pistol For Better Results.")
+            ImGui.EndTooltip()
+        end
+    elseif info.name == "Commit Seppuku (×_×) (pistol)" then
+        if ImGui.IsItemHovered() then
+            ImGui.BeginTooltip()
+            ImGui.Text("Equip Your Pistol For Better Results.")
+            ImGui.EndTooltip()
+        end
     end
+
 ImGui.SameLine()
 ImGui.Spacing()
 ImGui.SameLine()

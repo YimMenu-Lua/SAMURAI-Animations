@@ -1,6 +1,27 @@
-## Lua script for Yimmenu to play various GTA 5 animations.
+<h1 align="center">
+ Lua script for Yimmenu to play various GTA 5 animations. 
+</h1>
 
-![samurais_animations](https://github.com/YimMenu-Lua/SAMURAI-Animations/assets/66764345/f003724a-08c3-44e2-a239-37fe03fefcec)
+<img align="left" src="https://github.com/YimMenu-Lua/SAMURAI-Animations/assets/66764345/0cb0f9df-97d5-40ff-a3a2-8a3edbc2f0ef">  <img align="right" src="https://github.com/YimMenu-Lua/SAMURAI-Animations/assets/66764345/c9cd495d-70a6-4a1e-bcf8-a08b5d61d40d">
+
+##
+##
+##
+##
+##
+##
+##
+##
+##
+##
+##
+##
+##
+##
+##
+##
+##
+##
 
 > [!NOTE]
 > Due to life being a pain in my _a$$_, I will not have the time to improve this script so if anybody is willing to contribute animations or new features, feel free to to do so. There will be a short comment at the top of the **[animdata.lua](https://github.com/YimMenu-Lua/SAMURAI-Animations/blob/main/animdata.lua)** file explaining my mess. Pull requests are welcome.

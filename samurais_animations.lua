@@ -10,11 +10,19 @@ anim_player:add_text("Search animations :")
 
 local searchQuery = ""
 
+local is_playing_anim = false
 local is_typing = false
-script.register_looped("Animations", function()
+script.register_looped("-_-", function()
 	if is_typing then
 		PAD.DISABLE_ALL_CONTROL_ACTIONS(0)
 	end
+    if is_playing_anim and PAD.IS_CONTROL_PRESSED(0, 252) then
+        cleanup()
+        -- //fix player clipping through the ground after ending low-positioned anims//
+        local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
+        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
+        is_playing_anim = false
+    end
 end)
 
 anim_player:add_imgui(function()
@@ -55,18 +63,16 @@ anim_player:add_text("TIP : You can stop a currently playing animation \nby pres
 anim_player:add_separator()
 
 anim_player:add_imgui(function()
-
 local info = filteredAnims[anim_index+1]
 local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
 local coords = ENTITY.GET_ENTITY_COORDS(ped, false)
 local heading = ENTITY.GET_ENTITY_HEADING(ped)
 local forwardX = ENTITY.GET_ENTITY_FORWARD_X(ped)
 local forwardY = ENTITY.GET_ENTITY_FORWARD_Y(ped)
-local is_playing_anim = false
 local boneIndex = PED.GET_PED_BONE_INDEX(ped, info.boneID)
 local bonecoords = PED.GET_PED_BONE_COORDS(ped, info.boneID)
-local function cleanup()
-    script.run_in_fiber(function(fixthisshit)
+function cleanup()
+    script.run_in_fiber(function()
         TASK.CLEAR_PED_TASKS(ped)
         ENTITY.DELETE_ENTITY(prop1)
         ENTITY.SET_ENTITY_AS_NO_LONGER_NEEDED(prop1)
@@ -82,7 +88,6 @@ local function cleanup()
             STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
             coroutine.yield()
         end
-        fixthisshit:sleep()
     end)
 end
 
@@ -95,7 +100,7 @@ end
                         STREAMING.REQUEST_MODEL(info.prop1)
                         coroutine.yield()
                     end
-                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0, 0.0, 0, true, true, false)
+                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0, 0.0, 0.0, true, true, false)
                     ENTITY.ATTACH_ENTITY_TO_ENTITY(prop1, ped, boneIndex, info.posx, info.posy, info.posz, info.rotx, info.roty, info.rotz, false, false, false, false, 2, true, 1)
                     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
                     while not STREAMING.HAS_ANIM_DICT_LOADED(info.dict) and not STREAMING.HAS_ANIM_SET_LOADED(info.anim) do
@@ -104,7 +109,6 @@ end
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
-                    is_playing_anim = true
                 end)
 
             elseif info.type == 2 then
@@ -127,7 +131,6 @@ end
                         STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                         coroutine.yield()
                     end
-                    is_playing_anim = true
                 end)
 
             elseif info.type == 3 then
@@ -147,7 +150,6 @@ end
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
-                    is_playing_anim = true
                 end)
 
             elseif info.type == 4 then
@@ -163,13 +165,12 @@ end
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
-                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0, 0.0, 0, true, true, false)
+                    prop1 = OBJECT.CREATE_OBJECT(info.prop1, 0.0, 0.0, 0.0, true, true, false)
                     type4:sleep(200)
                     ENTITY.SET_ENTITY_COORDS_NO_OFFSET(prop1, bonecoords.x + info.posx, bonecoords.y + info.posy, bonecoords.z + info.posz)
                     OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop1)
                     ENTITY.SET_ENTITY_COLLISION(prop1, info.propColl, info.propColl)
                     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
-                    is_playing_anim = true
                 end)
             else
                 cleanup()
@@ -180,10 +181,10 @@ end
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 0.0, false, false, false)
-                    is_playing_anim = true
                 end)
             end
         end
+        is_playing_anim = true
     end
 
 ImGui.SameLine()
@@ -195,16 +196,6 @@ ImGui.SameLine()
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
         is_playing_anim = false
     end
-
-    script.register_looped("Stop Animation", function()
-        if is_playing_anim and PAD.IS_CONTROL_PRESSED(0, 252) then
-            cleanup()
-            -- //fix player clipping through the ground after ending low-positioned anims//
-            local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
-            is_playing_anim = false
-        end
-    end)
 
     event.register_handler(menu_event.ScriptsReloaded, function()
             GRAPHICS.STOP_PARTICLE_FX_LOOPED(loopedFX)

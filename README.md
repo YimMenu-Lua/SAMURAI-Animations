@@ -1,6 +1,7 @@
-<h1 align="center">
- Lua script for Yimmenu to play various GTA 5 animations. 
-</h1>
+# <p align="center"> SAMURAI's Animations </p>
+<p align="center"> Lua script to play GTA Online animations using YimMenu. </p>
+
+##
 
 <img align="left" src="https://github.com/YimMenu-Lua/SAMURAI-Animations/assets/66764345/0cb0f9df-97d5-40ff-a3a2-8a3edbc2f0ef">  <img align="right" src="https://github.com/YimMenu-Lua/SAMURAI-Animations/assets/66764345/c9cd495d-70a6-4a1e-bcf8-a08b5d61d40d">
 

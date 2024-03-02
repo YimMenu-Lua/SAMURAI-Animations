@@ -94,7 +94,7 @@ function cleanup()
     end)
 end
 
-    if ImGui.Button("Play") then
+    if ImGui.Button("	Play	") then
         if info then
             if info.type == 1 then
                 cleanup()
@@ -189,10 +189,52 @@ end
         end
         is_playing_anim = true
     end
-
+    if info.name == "Crawl Forward" then
+        if ImGui.IsItemHovered() then
+            ImGui.BeginTooltip()
+            ImGui.Text("Crawl Forward:\nUse 'A/D' To Turn Right/Left.")
+            ImGui.EndTooltip()
+        end
+    elseif info.name == "Goofy Walk" or info.name == "Boss Walk" or info.name == "Goofy run" then
+        if ImGui.IsItemHovered() then
+            ImGui.BeginTooltip()
+            ImGui.Text("Walk or run after playing the animation.")
+            ImGui.EndTooltip()
+        end
+    elseif info.name == "Sleep" or info.name == "Sunbathe" then
+        if ImGui.IsItemHovered() then
+            ImGui.BeginTooltip()
+            ImGui.Text("Use 'W A S D' to adjust your position.")
+            ImGui.EndTooltip()
+        end
+    end
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
+ImGui.SameLine()
+ImGui.Spacing()
 ImGui.SameLine()
 
-    if ImGui.Button("Stop") then
+    if ImGui.Button("	Stop	") then
         cleanup()
         -- //fix player clipping through the ground after ending low-positioned anims//
         local current_coords = ENTITY.GET_ENTITY_COORDS(ped)

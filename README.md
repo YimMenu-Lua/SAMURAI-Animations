@@ -1,16 +1,9 @@
 ## Lua script for Yimmenu to play various GTA 5 animations.
 
-![samurais_animations](https://github.com/xesdoog/SAMURAI-s-Animations/assets/66764345/be26aff9-5ad8-4918-92d4-a9bee03bf3df)
+![samurais_animations](https://github.com/YimMenu-Lua/SAMURAI-Animations/assets/66764345/f003724a-08c3-44e2-a239-37fe03fefcec)
 
 > [!NOTE]
->  The FPS problem should be fixed. If you experience any inconvenience related to this script, feel free to open a [new issue](https://github.com/YimMenu-Lua/SAMURAI-Animations/issues/new/choose).
-
-> _How do I know if the issue is related to this script?_
-
-Reload it. If the problem is still there, it's not related.
-
-##
-Due to life being a pain in my _a$$_, I will not have the time to improve this script so if anybody is willing to contribute animations or new features, feel free to to do so. There will be a short comment at the top of the **[animdata.lua](https://github.com/YimMenu-Lua/SAMURAI-Animations/blob/main/animdata.lua)** file explaining my mess. Pull requests are welcome.
+> Due to life being a pain in my _a$$_, I will not have the time to improve this script so if anybody is willing to contribute animations or new features, feel free to to do so. There will be a short comment at the top of the **[animdata.lua](https://github.com/YimMenu-Lua/SAMURAI-Animations/blob/main/animdata.lua)** file explaining my mess. Pull requests are welcome.
 ##
 
 ## FAQ 

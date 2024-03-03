@@ -184,7 +184,7 @@ end
             ImGui.Text("Crawl Forward:\nUse 'A/D' To Turn Right/Left.")
             ImGui.EndTooltip()
         end
-    elseif info.name == "Goofy Walk" or info.name == "Boss Walk" or info.name == "Goofy run" then
+    elseif info.name == "Goofy Walk" or info.name == "Boss Walk" or info.name == "Goofy Run" then
         if ImGui.IsItemHovered() then
             ImGui.BeginTooltip()
             ImGui.Text("Walk or run after playing the animation.")

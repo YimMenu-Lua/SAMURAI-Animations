@@ -10,7 +10,7 @@ anim_player:add_text("Search animations :")
 
 local searchQuery = ""
 
-local is_playing_anim = false
+is_playing_anim = false --I'm such a fucking idiot.
 
 local is_typing = false
 script.register_looped("-_-", function()

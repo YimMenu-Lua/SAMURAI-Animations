@@ -6,7 +6,7 @@ local animlist = require ("animdata")
 
 local anim_index = 1
 
-anim_player:add_text("Search animations :")
+anim_player:add_text("Search:")
 
 local searchQuery = ""
 
@@ -22,10 +22,10 @@ end)
 anim_player:add_imgui(function()
     searchQuery, used = ImGui.InputText("", searchQuery, 32)
     if ImGui.IsItemActive() then
-		is_typing = true
-	else
-		is_typing = false
-	end
+	is_typing = true
+    else
+	is_typing = false
+    end
     ImGui.PushItemWidth(350)
 end)
 
@@ -48,7 +48,7 @@ local function displayFilteredList()
     for _, anim in ipairs(filteredAnims) do
         table.insert(animNames, anim.name)
     end
-    anim_index, used = ImGui.ListBox(" ", anim_index, animNames, #filteredAnims)
+    anim_index, used = ImGui.ListBox("", anim_index, animNames, #filteredAnims)
 end
 
 anim_player:add_imgui(displayFilteredList)
@@ -56,8 +56,8 @@ anim_player:add_imgui(displayFilteredList)
 anim_player:add_separator()
 
 anim_player:add_imgui(function()
-local info = filteredAnims[anim_index+1]
-local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
+info = filteredAnims[anim_index+1]
+ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
 local coords = ENTITY.GET_ENTITY_COORDS(ped, false)
 local heading = ENTITY.GET_ENTITY_HEADING(ped)
 local forwardX = ENTITY.GET_ENTITY_FORWARD_X(ped)
@@ -118,14 +118,14 @@ end
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 0, false, false, false)
-                    type2:sleep(400)
+                    type2:sleep(info.ptfxdelay)
                     GRAPHICS.USE_PARTICLE_FX_ASSET(info.ptfxdict)
                     loopedFX = GRAPHICS.START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(info.ptfxname, ped, info.ptfxOffx, info.ptfxOffy, info.ptfxOffz, 0.0, 0.0, 0.0, boneIndex, info.ptfxscale, false, false, false, 0, 0, 0, 0)
                     while STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(info.ptfxdict) do
                         STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                         coroutine.yield()
                     end
-		is_playing_anim = true
+		    is_playing_anim = true
                 end)
 
             elseif info.type == 3 then
@@ -145,7 +145,7 @@ end
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
-		is_playing_anim = true
+		    is_playing_anim = true
                 end)
 
             elseif info.type == 4 then
@@ -167,7 +167,7 @@ end
                     OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop1)
                     ENTITY.SET_ENTITY_COLLISION(prop1, info.propColl, info.propColl)
                     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
-		is_playing_anim = true
+		    is_playing_anim = true
                 end)
             else
                 cleanup()
@@ -178,16 +178,16 @@ end
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 0.0, false, false, false)
-		is_playing_anim = true
+		    is_playing_anim = true
                 end)
             end
         end
-        is_playing_anim = true
     end
+
     if info.name == "Crawl Forward" then
         if ImGui.IsItemHovered() then
             ImGui.BeginTooltip()
-            ImGui.Text("Crawl Forward:\nUse 'A/D' To Turn Right/Left.")
+            ImGui.Text("Use 'A/D' To Turn Left/Right.")
             ImGui.EndTooltip()
         end
     elseif info.name == "Goofy Walk" or info.name == "Boss Walk" or info.name == "Goofy Run" then
@@ -205,7 +205,7 @@ end
     elseif info.name == "Crawl Forward Injured" then
         if ImGui.IsItemHovered() then
             ImGui.BeginTooltip()
-            ImGui.Text("Use 'A/D' To Turn Right/Left.\nEquip Your Pistol For Better Results.")
+            ImGui.Text("Use 'A/D' To Turn Left/Right.\nEquip Your Pistol For Better Results.")
             ImGui.EndTooltip()
         end
     elseif info.name == "Commit Seppuku (×_×) (pistol)" then

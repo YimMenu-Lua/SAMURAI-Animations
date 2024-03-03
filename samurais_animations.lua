@@ -11,6 +11,7 @@ anim_player:add_text("Search animations :")
 local searchQuery = ""
 
 local is_playing_anim = false
+
 local is_typing = false
 script.register_looped("-_-", function()
 	if is_typing then
@@ -101,6 +102,7 @@ end
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
+		    is_playing_anim = true
                 end)
 
             elseif info.type == 2 then
@@ -123,6 +125,7 @@ end
                         STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                         coroutine.yield()
                     end
+		is_playing_anim = true
                 end)
 
             elseif info.type == 3 then
@@ -142,6 +145,7 @@ end
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 1.0, false, false, false)
+		is_playing_anim = true
                 end)
 
             elseif info.type == 4 then
@@ -163,6 +167,7 @@ end
                     OBJECT.PLACE_OBJECT_ON_GROUND_PROPERLY(prop1)
                     ENTITY.SET_ENTITY_COLLISION(prop1, info.propColl, info.propColl)
                     STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(info.prop1)
+		is_playing_anim = true
                 end)
             else
                 cleanup()
@@ -173,6 +178,7 @@ end
                         coroutine.yield()
                     end
                     TASK.TASK_PLAY_ANIM(ped, info.dict, info.anim, 4.0, -4.0, -1, info.flag, 0.0, false, false, false)
+		is_playing_anim = true
                 end)
             end
         end
@@ -245,6 +251,12 @@ ImGui.SameLine()
         else
         	ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
         end
+	is_playing_anim = false
+    end
+    if ImGui.IsItemHovered() then
+        ImGui.BeginTooltip()
+        ImGui.Text("TIP: You can also stop animations by pressing\n'X' on keyboard or 'LT' on controller.")
+        ImGui.EndTooltip()
     end
 
     event.register_handler(menu_event.ScriptsReloaded, function()
@@ -254,6 +266,7 @@ ImGui.SameLine()
             ENTITY.DELETE_ENTITY(prop2)
             ENTITY.SET_ENTITY_AS_NO_LONGER_NEEDED(prop2)
             TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
+	    is_playing_anim = false
             while STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(info.ptfxdict) do
                 STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                 coroutine.yield()
@@ -279,6 +292,7 @@ ImGui.SameLine()
             ENTITY.DELETE_ENTITY(prop2)
             ENTITY.SET_ENTITY_AS_NO_LONGER_NEEDED(prop2)
             TASK.CLEAR_PED_TASKS_IMMEDIATELY(ped)
+	    is_playing_anim = false
             while STREAMING.HAS_NAMED_PTFX_ASSET_LOADED(info.ptfxdict) do
                 STREAMING.REMOVE_NAMED_PTFX_ASSET(info.ptfxdict)
                 coroutine.yield()
@@ -296,4 +310,20 @@ ImGui.SameLine()
         	ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
             end
     end)
+end)
+
+script.register_looped("baremchinayek", function(script)
+    script:yield()
+    if is_playing_anim then
+        if PAD.IS_CONTROL_PRESSED(0, 252) then
+            cleanup()
+            is_playing_anim = false
+            local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
+            if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
+                PED.SET_PED_COORDS_KEEP_VEHICLE(ped, current_coords.x, current_coords.y, current_coords.z)
+            else
+                ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
+            end
+        end
+    end
 end)

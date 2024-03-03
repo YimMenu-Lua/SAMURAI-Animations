@@ -61,10 +61,6 @@ anim_player:add_imgui(displayFilteredList)
 
 anim_player:add_separator()
 
-anim_player:add_text("TIP : You can stop a currently playing animation \nby pressing 'X' on keyboard or 'LT' on controller.")
-
-anim_player:add_separator()
-
 anim_player:add_imgui(function()
 local info = filteredAnims[anim_index+1]
 local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(PLAYER.PLAYER_ID())
@@ -253,6 +249,11 @@ ImGui.SameLine()
         local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
         ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
         is_playing_anim = false
+    end
+    if ImGui.IsItemHovered() then
+        ImGui.BeginTooltip()
+        ImGui.Text("TIP: You can also stop playing animations \nby pressing 'X' on keyboard or 'LT' on controller.")
+        ImGui.EndTooltip()
     end
 
     event.register_handler(menu_event.ScriptsReloaded, function()

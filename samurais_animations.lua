@@ -16,13 +16,6 @@ script.register_looped("-_-", function()
 	if is_typing then
 		PAD.DISABLE_ALL_CONTROL_ACTIONS(0)
 	end
-    if is_playing_anim and PAD.IS_CONTROL_PRESSED(0, 252) then
-        cleanup()
-        -- //fix player clipping through the ground after ending low-positioned anims//
-        local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
-        is_playing_anim = false
-    end
 end)
 
 anim_player:add_imgui(function()
@@ -246,14 +239,12 @@ ImGui.SameLine()
     if ImGui.Button("	Stop	") then
         cleanup()
         -- //fix player clipping through the ground after ending low-positioned anims//
+        if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
         local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
-        ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
-        is_playing_anim = false
-    end
-    if ImGui.IsItemHovered() then
-        ImGui.BeginTooltip()
-        ImGui.Text("TIP: You can also stop playing animations \nby pressing 'X' on keyboard or 'LT' on controller.")
-        ImGui.EndTooltip()
+        	PED.SET_PED_COORDS_KEEP_VEHICLE(ped, current_coords.x, current_coords.y, current_coords.z)
+        else
+        	ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
+        end
     end
 
     event.register_handler(menu_event.ScriptsReloaded, function()
@@ -273,8 +264,12 @@ ImGui.SameLine()
                 coroutine.yield()
             end
             -- //fix player clipping through the ground after ending low-positioned anims//
+            if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
             local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
+        	PED.SET_PED_COORDS_KEEP_VEHICLE(ped, current_coords.x, current_coords.y, current_coords.z)
+            else
+        	ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
+            end
     end)
 
     event.register_handler(menu_event.MenuUnloaded, function()
@@ -294,7 +289,11 @@ ImGui.SameLine()
                 coroutine.yield()
             end
             -- //fix player clipping through the ground after ending low-positioned anims//
+            if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
             local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
-            ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
+        	PED.SET_PED_COORDS_KEEP_VEHICLE(ped, current_coords.x, current_coords.y, current_coords.z)
+            else
+        	ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
+            end
     end)
 end)

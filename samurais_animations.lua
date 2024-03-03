@@ -239,8 +239,8 @@ ImGui.SameLine()
     if ImGui.Button("	Stop	") then
         cleanup()
         -- //fix player clipping through the ground after ending low-positioned anims//
-        if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
         local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
+        if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
         	PED.SET_PED_COORDS_KEEP_VEHICLE(ped, current_coords.x, current_coords.y, current_coords.z)
         else
         	ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
@@ -264,8 +264,8 @@ ImGui.SameLine()
                 coroutine.yield()
             end
             -- //fix player clipping through the ground after ending low-positioned anims//
-            if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
             local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
+            if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
         	PED.SET_PED_COORDS_KEEP_VEHICLE(ped, current_coords.x, current_coords.y, current_coords.z)
             else
         	ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)
@@ -289,8 +289,8 @@ ImGui.SameLine()
                 coroutine.yield()
             end
             -- //fix player clipping through the ground after ending low-positioned anims//
-            if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
             local current_coords = ENTITY.GET_ENTITY_COORDS(ped)
+            if PED.IS_PED_IN_ANY_VEHICLE(ped, false) then
         	PED.SET_PED_COORDS_KEEP_VEHICLE(ped, current_coords.x, current_coords.y, current_coords.z)
             else
         	ENTITY.SET_ENTITY_COORDS_NO_OFFSET(ped, current_coords.x, current_coords.y, current_coords.z, true, false, false)

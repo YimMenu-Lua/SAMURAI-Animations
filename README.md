@@ -1,5 +1,5 @@
 # <p align="center"> SAMURAI's Animations </p>
-<p align="center"> Lua script to play GTA Online animations using YimMenu. </p>
+<p align="center"> Play GTA V Animations Using YimMenu. </p>
 
 ##
 

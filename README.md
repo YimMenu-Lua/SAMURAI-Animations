@@ -25,4 +25,4 @@
 ##
 
 > [!WARNING]
-> This script will no longer receive updates because it has been improved and moved to YimActions.
+> This script will no longer receive updates because it has been improved and moved to [YimActions](https://github.com/YimMenu-Lua/YimActions).
